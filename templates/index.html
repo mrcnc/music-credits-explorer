@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <title>Music Explorer</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Find new music by searching through album and song credits.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="canonical" href="/">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/yeti/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <header>
+    <h1>Explore by Album or Song</h1>
+    </header>
+
+    <main>
+    <form action="album" method="GET" >
+      <label for="Album">Album</label>
+      {% if album %}
+      <input type="text" name="title" value="{{ album.title }}">
+      {% else %}
+      <input type="text" name="title" placeholder="Enter an album name here">
+      {% endif %}
+    </form>
+
+    <form action="song">
+      <label for="Song">Song</label>
+      {% if song %}
+      <input type="text" name="title" value="{{ song.title }}">
+      {% else %}
+      <input type="text" name="title" placeholder="Enter an song name here">
+      {% endif %}
+    </form>
+
+    {% if album %}
+    <section>
+    <h2>{{ album.title }}</h2>
+
+    {% if album.credits %}
+    <h3>Album Credits</h3>
+    <ul>
+      {% for credit in album.credits %}
+      <li><a href="/artist?name={{ credit.name }}">{{ credit.name }}</a> {{ credit.credit }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <section>
+    {% endif %}
+
+
+    {% if song %}
+    <section>
+    <h2>{{ song.title }}</h2>
+
+    {% if song.primaryArtists %}
+    <h3>Primary Artists</h3>
+    <ul>
+      {% for artist in song.primaryArtists %}
+        <li><a href="/artist?name={{ artist.name }}">{{ artist.name }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <section>
+    {% endif %}
+
+
+    </main>
+
+    <footer>
+    </footer>
+
+  </body>
+</html>
+
